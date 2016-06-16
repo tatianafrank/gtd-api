@@ -10,15 +10,18 @@ module.exports = function(app, db) {
 		function parseQuery(parsedUrl) {
 			var query = parsedUrl.query;
 			var queryKeys = Object.keys(query);
-			//paramater objects for nested mongo query object-- mongo find does not accept strings, only object
+
+			//Mongo find query does no take strings so must declare and nest objects for each parameter in the query below
 			var yearObj = {};
 			var countryObj = {};
 			var yrange = {};
 			var weapObj = {};
 
+			//iterate through each query parameter in url
 			for(i = 0; i < queryKeys.length; i++) {
 				var qk = queryKeys[i];
 				var qv = query[qk];
+				//for year paramater create a range value that is >= startyr and <= endyr
 				if(qk == 'startyr'){	
 					yrange['$gte'] = Number(qv);
 					yearObj['iyear'] = yrange;
@@ -37,10 +40,12 @@ module.exports = function(app, db) {
 					weapObj['weaptype1'] = inRange;
 				}
 			}
+
 			searchDb(yearObj, countryObj, weapObj);
 		}
 
 		function getRange(obj){
+		//creates "$in" object for paramaters with more than one value for a single key
 			var inRange = {};
 			inRange['$in'] = [];
 			if (typeof obj == 'object') {
