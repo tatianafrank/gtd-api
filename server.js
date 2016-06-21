@@ -9,7 +9,9 @@ mongo.MongoClient.connect('mongodb://localhost:27017/gtd', function(err, db){
 		console.log(err);
 	}
 	routes(app, db);
-	var server = app.listen('104.131.99.148:80', function () {
-	    console.log("App now running on port");
+	// var port = '104.131.99.148:80' || 3000;
+	var port = 3000;
+	var server = app.listen(port, function () {
+	    console.log("App now running on port ", port);
 	}); 
 });
