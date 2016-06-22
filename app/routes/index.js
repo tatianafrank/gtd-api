@@ -1,11 +1,17 @@
 module.exports = function(app, db) {
 	var url = require('url');
+	var path = require('path');
 	var rateLimit = require('../rate-limit.js');
 
 	rateLimit(app);
 
 	app.get('/', function(req, res) {
-		res.send('Please enter query parameters to search the database');
+		var index = path.join(__dirname, '../index.html')
+		return res.sendFile(index);
+	});
+
+	app.use(function(req, res) {
+	    return res.status(404).end('Page not found.');
 	});
 
 	app.get('/search/*', function(req, res) {
@@ -89,11 +95,14 @@ module.exports = function(app, db) {
 			var result = db.collection('allData').find(queryStr).toArray(function(err, data) {
 				if(err) {
 					console.log(err);
+					res.setHeader('Content-Type', 'application/json');
 					return res.send(err);
 				} 
 				if(data.length) {
+					res.setHeader('Content-Type', 'application/json');
 					return res.json(data);
 				} else {
+					res.setHeader('Content-Type', 'text/html');
 					return res.send('No records matched your search.')
 				}
 				db.close();
