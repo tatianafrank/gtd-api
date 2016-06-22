@@ -13,6 +13,7 @@
 	<h4>For more information on GTD please visit https://www.start.umd.edu/gtd/</h4>
 	<p>	
 		To search, visit or send a get request to <strong>/search/</strong> followed by your query parameters (info below).<br>
+		Requests are limited to 10 requests per minute.
 	</p>
 	<h3>Query Paramaters</h3>
 	<p>
@@ -27,11 +28,11 @@
 			</li>
 			<br>
 			<li>
-			<strong>Endyr</strong><br> - Endyr is require if using Startyr. If you are searching for incidents during a range of years, Endyr would be the end of the range but not included in the range. For example, to search incidents which took place during 1991-1993 including 1993 enter 1994 as the Endyr and 1991 as the Startyr. Accepts numerical value only.
+			<strong>Endyr</strong><br> - Endyr is required if using Startyr. If you are searching for incidents during a range of years, Endyr would be the end of the range but not included in the range. For example, to search incidents which took place during 1991-1993 including 1993 enter 1994 as the Endyr and 1991 as the Startyr. Accepts numerical value only.
 			</li>
 			<br>
 			<li>
-				<strong>Country</strong><br> - Numerical code for country or countries you would like to search. To search for a range of countries, enter a new country parameter for each additional country. For example, to search for incident that occurred in Afghanistan and Albania enter 'search/&amp;country=4&amp;country=5'. Please reference the GTD codebook for the list of country codes. Accepts numerical value only.
+				<strong>Country</strong><br> - Numerical code for country or countries you would like to search. To search for a range of countries, enter a new country parameter for each additional country. For example, to search for incidents that occurred in Afghanistan and Albania enter 'search/?country=4&amp;country=5'. Please reference the GTD codebook for the list of country codes. Accepts numerical value only.
 			</li>
 			<br>
 			<li>
