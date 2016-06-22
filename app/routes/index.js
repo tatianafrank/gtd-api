@@ -90,8 +90,11 @@ module.exports = function(app, db) {
 				if(err) {
 					console.log(err);
 					return res.send(err);
-				} else {
+				} 
+				if(data.length) {
 					return res.json(data);
+				} else {
+					return res.send('No records matched your search.')
 				}
 				db.close();
 			});
