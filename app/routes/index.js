@@ -10,19 +10,17 @@ module.exports = function(app, db) {
 		return res.sendFile(index);
 	});
 
-	app.use(function(req, res) {
-	    return res.status(404).end('Page not found.');
-	});
 
-	app.get('/search/*', function(req, res) {
+	app.get('/search/*', function(req, res, next) {
 		var parsedUrl = url.parse(req.url, true);
-
 		if(parsedUrl){
 			var query = parsedUrl.query;
 			var queryKeys = Object.keys(query);
 
 			if(queryKeys.length > 0){
 				buildQuery(query, queryKeys);
+			} else {
+				return res.send('Please provide query parameters');
 			}
 		}
 
@@ -70,7 +68,6 @@ module.exports = function(app, db) {
 				}
 			}
 			paramArr.push(yearObj)
-			console.log(paramArr);
 			searchDb(paramArr);
 			//calls searchDB with all the mongo db query objects in one arrauy 
 		}
@@ -96,18 +93,18 @@ module.exports = function(app, db) {
 				if(err) {
 					console.log(err);
 					res.setHeader('Content-Type', 'application/json');
-					return res.send(err);
+					res.send(err);
+					return next(err);
 				} 
 				if(data.length) {
 					res.setHeader('Content-Type', 'application/json');
 					return res.json(data);
 				} else {
 					res.setHeader('Content-Type', 'text/html');
-					return res.send('No records matched your search.')
+					return res.send('No records matched your search.');
 				}
 				db.close();
 			});
 		}
-		
 	});
 }
